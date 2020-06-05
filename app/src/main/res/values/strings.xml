@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Unit Converter</string>
+    <string name="type_of_quantity_label">Type of Quantity</string>
+    <string name="unit_1_label">Unit 1</string>
+    <string name="unit_2_label">Unit 2</string>
+    <string name="magnitude_hint">Magnitude</string>
+    <string name="convert_button_label">CONVERT</string>
+    <string-array name="type_of_quantities">
+        <item>Length</item>
+        <item>Area</item>
+        <item>Mass</item>
+    </string-array>
+    <string-array name="length_units" >
+        <item>Metre</item>
+        <item>Centimetre</item>
+        <item>Kilometre</item>
+    </string-array>
 </resources>
