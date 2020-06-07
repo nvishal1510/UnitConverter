@@ -1,0 +1,25 @@
+Interface Quantity
+    convert(magnitude, from unit,to unit)
+
+Length
+    Enum Units implements Normalizable
+    Convert Units implements Convertible
+
+
+dictionary to  map visible quantity strings to classes
+
+
+
+        Item on quantity spinner selected
+                |
+        dict[string on selected spinner].setValues
+        (sets values to unit1 and unit2 spinners)
+
+
+
+
+         textChangeListener is the mainActivity class, which indeed calls Quantity class
+                |
+        When value is changed in magnitudeEditText,
+         listener is called
+         which changes the value on the other magnitudeEditText
