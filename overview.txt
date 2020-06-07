@@ -16,10 +16,14 @@ dictionary to  map visible quantity strings to classes
         (sets values to unit1 and unit2 spinners)
 
 
-
-
          textChangeListener is the mainActivity class, which indeed calls Quantity class
                 |
         When value is changed in magnitudeEditText,
          listener is called
          which changes the value on the other magnitudeEditText
+
+
+Improvements to be done
+    - Output in decimal form only if necessary
+    - When user clicks on magnitudeET, text should get selected
+    - Improve look and feel of the app
