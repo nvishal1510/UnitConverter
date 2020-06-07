@@ -6,10 +6,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity
      */
     private boolean IamEditingText = false;
 
+    private String numbersFormat = "%.4f";
+
+    /**
+     * This object to attached magnitude editTexts to respond to change in text
+     */
     private TextWatcher textWatcher = new TextWatcher()
     {
         @Override
@@ -85,25 +90,36 @@ public class MainActivity extends AppCompatActivity
     private OnItemSelectedListener unitTypeListener = new OnItemSelectedListener()
     {
         /**
-         * This changes the magnitude of the Unit which is not clicked, i.e, if Unit1Type is clicked, magnitude at
-         * unit2Magnitude is changed
+         * This changes the magnitude of the unit 2 regardless of whether unit 1 type is changed or unit 2 type is
+         * changed
          */
         @Override
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
         {
             Log.d(LOG_TAG, "onItemSelected() called with: parent = [" + parent + "], view = [" + view + "], position " +
                     "= [" + position + "], id = [" + id + "]");
-            if (parent.getId() == unit1Type.getId())
-            {
-                setETMagnitude(unit1Magnitude, (Unit) unit1Type.getSelectedItem(),
-                        unit2Magnitude, (Unit) unit2Type.getSelectedItem());
 
-            }
-            else
-            {
-                setETMagnitude(unit2Magnitude, (Unit) unit2Type.getSelectedItem(),
-                        unit1Magnitude, (Unit) unit1Type.getSelectedItem());
-            }
+            setETMagnitude(unit1Magnitude, (Unit) unit1Type.getSelectedItem(),
+                    unit2Magnitude, (Unit) unit2Type.getSelectedItem());
+
+        }
+
+        @Override
+        public void onNothingSelected (AdapterView<?> parent)
+        {
+
+        }
+    };
+
+    private OnItemSelectedListener quantityTypeListener = new OnItemSelectedListener()
+    {
+        @Override
+        public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
+        {
+            updateFocusedQuantity();
+            focusedQuantity.populateSpinner(unit1Type);
+            focusedQuantity.populateSpinner(unit2Type);
+            resetEditTexts();
         }
 
         @Override
@@ -119,11 +135,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //initialize quantity type spinner
         quantityType = findViewById(R.id.quantityTypeSpinner);
-//        quantityType.setOnItemSelectedListener();
+        quantityType.setOnItemSelectedListener(quantityTypeListener);
         populateQuantityTypeSpinner();
-        focusedQuantity = quantityMap.get(quantityType.getSelectedItem());
+        updateFocusedQuantity();
 
+        //initialize unit type spinners
         unit1Type = findViewById(R.id.unit1Spinner);
         unit2Type = findViewById(R.id.unit2Spinner);
         unit1Type.setOnItemSelectedListener(unitTypeListener);
@@ -133,11 +151,20 @@ public class MainActivity extends AppCompatActivity
         focusedQuantity.populateSpinner(unit2Type);
         focusedUnit2 = (Unit) unit2Type.getSelectedItem();
 
+        //initialize magnitudes editText
         unit1Magnitude = findViewById(R.id.unit1Magnitude);
         unit2Magnitude = findViewById(R.id.unit2Magnitude);
-
+        resetEditTexts();
         unit1Magnitude.addTextChangedListener(textWatcher);
         unit2Magnitude.addTextChangedListener(textWatcher);
+    }
+
+    /**
+     * Updates focusedQuantity variable using quantityMap
+     */
+    private void updateFocusedQuantity ()
+    {
+        focusedQuantity = quantityMap.get(quantityType.getSelectedItem());
     }
 
 
@@ -163,10 +190,21 @@ public class MainActivity extends AppCompatActivity
         {
         }
 
-        focusedQuantity.setMagnitude(magnitude, focusedUnit1);
-        double otherUnitMagnitude = focusedQuantity.getMagnitude(focusedUnit2);
+        focusedQuantity.setMagnitude(magnitude, getMagnitudeETUnit);
+        double otherUnitMagnitude = focusedQuantity.getMagnitude(setMagnitudeETUnit);
         IamEditingText = true;
-        unit2Magnitude.setText(String.format(Locale.ENGLISH, "%.4f", otherUnitMagnitude));
+        setMagnitudeET.setText(String.format(Locale.ENGLISH, numbersFormat, otherUnitMagnitude));
+        IamEditingText = false;
+    }
+
+    /**
+     * Sets the values of the two editText to 0
+     */
+    private void resetEditTexts ()
+    {
+        IamEditingText = true;
+        unit1Magnitude.setText(String.format(Locale.ENGLISH, numbersFormat, 0.0));
+        unit2Magnitude.setText(String.format(Locale.ENGLISH, numbersFormat, 0.0));
         IamEditingText = false;
     }
 
