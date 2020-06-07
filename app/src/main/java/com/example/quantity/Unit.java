@@ -7,5 +7,5 @@ public interface Unit
      *
      * @return the normalizationFactor
      */
-    public double getNormalizationFactor ();
+    double getNormalizationFactor ();
 }
