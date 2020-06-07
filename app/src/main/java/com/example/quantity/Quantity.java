@@ -18,10 +18,10 @@ public abstract class Quantity
         this.normalizedMagnitude = normalizedMagnitude;
     }
 
-    public Quantity (double magnitude, Unit unit)
-    {
-        this(magnitude * unit.getNormalizationFactor());
-    }
+//    public Quantity (double magnitude, Unit unit)
+//    {
+//        this(magnitude * unit.getNormalizationFactor());
+//    }
 
     /**
      * normalizedMagnitude represent magnitude of a quantity in SI units

@@ -4,23 +4,25 @@ import android.widget.Spinner;
 
 public class Length extends Quantity
 {
-    public Length (double normalizedMagnitude)
-    {
-        super(normalizedMagnitude);
-    }
+    public static Length length = new Length();
 
-    public Length ()
+//    public Length (double normalizedMagnitude)
+//    {
+//        super(normalizedMagnitude);
+//    }
+
+    private Length ()
     {
         super(0);
     }
 
-    public Length (double magnitude, Unit unit) throws InstantiationError
-    {
-        super(magnitude, unit);
-        if (!(unit instanceof Units))
-            throw new InstantiationError("Length object cannot be instantiated for non length " +
-                    "units");
-    }
+//    public Length (double magnitude, Unit unit) throws InstantiationError
+//    {
+//        super(magnitude, unit);
+//        if (!(unit instanceof Units))
+//            throw new InstantiationError("Length object cannot be instantiated for non length " +
+//                    "units");
+//    }
 
     @Override
     public double getMagnitude (Unit unit) throws NoSuchMethodError

@@ -4,22 +4,24 @@ import android.widget.Spinner;
 
 public class Mass extends Quantity
 {
-    public Mass (double normalizedMagnitude)
-    {
-        super(normalizedMagnitude);
-    }
+    public static Mass mass=new Mass();
 
-    public Mass ()
+//    public Mass (double normalizedMagnitude)
+//    {
+//        super(normalizedMagnitude);
+//    }
+
+    private Mass ()
     {
         super(0);
     }
 
-    public Mass (double magnitude, Unit unit) throws InstantiationError
-    {
-        super(magnitude, unit);
-        if (!(unit instanceof Units))
-            throw new InstantiationError("Mass object cannot be instantiated for non mass units");
-    }
+//    public Mass (double magnitude, Unit unit) throws InstantiationError
+//    {
+//        super(magnitude, unit);
+//        if (!(unit instanceof Units))
+//            throw new InstantiationError("Mass object cannot be instantiated for non mass units");
+//    }
 
     @Override
     public double getMagnitude (Unit unit) throws NoSuchMethodError
