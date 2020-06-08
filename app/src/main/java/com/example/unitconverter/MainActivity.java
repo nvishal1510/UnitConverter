@@ -18,6 +18,8 @@ import com.example.quantity.Mass;
 import com.example.quantity.Quantity;
 import com.example.quantity.Unit;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -45,8 +47,6 @@ public class MainActivity extends AppCompatActivity
     private EditText unit1Magnitude;
     private EditText unit2Magnitude;
     private Quantity focusedQuantity;
-    private Unit focusedUnit1;
-    private Unit focusedUnit2;
 
     /**
      * This should made true when editing text due to internal functions. This is to prevent entering into recursion
@@ -54,7 +54,10 @@ public class MainActivity extends AppCompatActivity
      */
     private boolean IamEditingText = false;
 
-    private String numbersFormat = "%.4f";
+    /**
+     * Formatter used for formatting numbers in ET magnitude
+     */
+    NumberFormat numberFormat = new DecimalFormat("##,##,##,##,###.#########");
 
     /**
      * This object to attached magnitude editTexts to respond to change in text
@@ -147,9 +150,7 @@ public class MainActivity extends AppCompatActivity
         unit1Type.setOnItemSelectedListener(unitTypeListener);
         unit2Type.setOnItemSelectedListener(unitTypeListener);
         focusedQuantity.populateSpinner(unit1Type);
-        focusedUnit1 = (Unit) unit1Type.getSelectedItem();
         focusedQuantity.populateSpinner(unit2Type);
-        focusedUnit2 = (Unit) unit2Type.getSelectedItem();
 
         //initialize magnitudes editText
         unit1Magnitude = findViewById(R.id.unit1Magnitude);
@@ -193,7 +194,7 @@ public class MainActivity extends AppCompatActivity
         focusedQuantity.setMagnitude(magnitude, getMagnitudeETUnit);
         double otherUnitMagnitude = focusedQuantity.getMagnitude(setMagnitudeETUnit);
         IamEditingText = true;
-        setMagnitudeET.setText(String.format(Locale.ENGLISH, numbersFormat, otherUnitMagnitude));
+        setMagnitudeET.setText(numberFormat.format(otherUnitMagnitude));
         IamEditingText = false;
     }
 
@@ -203,8 +204,8 @@ public class MainActivity extends AppCompatActivity
     private void resetEditTexts ()
     {
         IamEditingText = true;
-        unit1Magnitude.setText(String.format(Locale.ENGLISH, numbersFormat, 0.0));
-        unit2Magnitude.setText(String.format(Locale.ENGLISH, numbersFormat, 0.0));
+        unit1Magnitude.setText(numberFormat.format(0));
+        unit2Magnitude.setText(numberFormat.format(0));
         IamEditingText = false;
     }
 
