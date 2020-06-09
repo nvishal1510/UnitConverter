@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.quantity.Area;
 import com.example.quantity.Length;
 import com.example.quantity.Mass;
 import com.example.quantity.Quantity;
@@ -20,10 +21,6 @@ import com.example.quantity.Unit;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity
@@ -31,16 +28,9 @@ public class MainActivity extends AppCompatActivity
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     /**
-     * This maps Strings with static Quantity objects
+     * Formatter used for formatting numbers in ET magnitude
      */
-    private static final Map<String, Quantity> quantityMap = new HashMap<>();
-
-    static
-    {
-        quantityMap.put("Length", Length.length);
-        quantityMap.put("Mass", Mass.mass);
-    }
-
+    NumberFormat numberFormat = new DecimalFormat("##,##,##,##,###.###########");
     private Spinner quantityType;
     private Spinner unit1Type;
     private Spinner unit2Type;
@@ -49,15 +39,10 @@ public class MainActivity extends AppCompatActivity
     private Quantity focusedQuantity;
 
     /**
-     * This should made true when editing text due to internal functions. This is to prevent entering into recursion
-     * of calling each other
+     * This should made true when editing text due to internal functions. This is to prevent
+     * entering into recursion of calling each other
      */
     private boolean IamEditingText = false;
-
-    /**
-     * Formatter used for formatting numbers in ET magnitude
-     */
-    NumberFormat numberFormat = new DecimalFormat("##,##,##,##,###.#########");
 
     /**
      * This object to attached magnitude editTexts to respond to change in text
@@ -90,17 +75,24 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
+    /**
+     * This object is attached to unitType spinners as OnItemSelectedListener
+     * When an item is selected in any unitType spinner, this changes the Unit 2 Magnitude
+     * according to units after the change
+     */
     private OnItemSelectedListener unitTypeListener = new OnItemSelectedListener()
     {
         /**
-         * This changes the magnitude of the unit 2 regardless of whether unit 1 type is changed or unit 2 type is
-         * changed
+         * This changes the magnitude of the unit 2 regardless of whether unit 1 type is changed
+         * or unit 2 type is changed
          */
         @Override
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
         {
-            Log.d(LOG_TAG, "onItemSelected() called with: parent = [" + parent + "], view = [" + view + "], position " +
-                    "= [" + position + "], id = [" + id + "]");
+            Log.d(LOG_TAG,
+                    "onItemSelected() called with: parent = [" + parent + "], view = [" + view +
+                            "], position " +
+                            "= [" + position + "], id = [" + id + "]");
 
             setETMagnitude(unit1Magnitude, (Unit) unit1Type.getSelectedItem(),
                     unit2Magnitude, (Unit) unit2Type.getSelectedItem());
@@ -113,7 +105,6 @@ public class MainActivity extends AppCompatActivity
 
         }
     };
-
     private OnItemSelectedListener quantityTypeListener = new OnItemSelectedListener()
     {
         @Override
@@ -165,23 +156,24 @@ public class MainActivity extends AppCompatActivity
      */
     private void updateFocusedQuantity ()
     {
-        focusedQuantity = quantityMap.get(quantityType.getSelectedItem());
+        Quantities selectedObject = (Quantities) quantityType.getSelectedItem();
+        focusedQuantity = selectedObject.getQuantityObject();
     }
 
-
     /**
-     * Extracts magnitude of the unit from getMagnitudeET, calculates the Magnitude of the other unit and sets text
-     * to it
+     * Extracts magnitude of the unit from getMagnitudeET, calculates the Magnitude of the other
+     * unit and sets text to it
      *
-     * @param getMagnitudeET The EditText from which magnitude is extracted, it is used as reference to
-     *                       set magnitude for other unit
-     * @param setMagnitudeET The EditText which is changed according to the magnitude in getMagnitudeET
+     * @param getMagnitudeET The EditText from which magnitude is extracted, it is used as
+     *                       reference to set magnitude for other unit
+     * @param setMagnitudeET The EditText which is changed according to the magnitude in
+     *                       getMagnitudeET
      */
-    private void setETMagnitude (EditText getMagnitudeET, Unit getMagnitudeETUnit, EditText setMagnitudeET,
-                                 Unit setMagnitudeETUnit)
+    private void setETMagnitude (EditText getMagnitudeET, Unit getMagnitudeETUnit,
+                                 EditText setMagnitudeET, Unit setMagnitudeETUnit)
     {
-        Log.d(LOG_TAG,
-                "setETMagnitude() called with: getMagnitudeET = [" + getMagnitudeET + "], setMagnitudeET = [" + setMagnitudeET + "]");
+        Log.d(LOG_TAG, "setETMagnitude() called with: getMagnitudeET = [" + getMagnitudeET + "], "
+                + "setMagnitudeET = [" + setMagnitudeET + "]");
         double magnitude = 0;
         try
         {
@@ -213,11 +205,40 @@ public class MainActivity extends AppCompatActivity
     {
         Log.d(LOG_TAG, "populateQuantityTypeSpinner() called");
 
-        ArrayList<String> quantityList = new ArrayList<>(quantityMap.keySet());
-        ArrayAdapter<String> quantityTypeArrayAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, quantityList);
+        ArrayAdapter<Quantities> quantityTypeArrayAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, Quantities.values());
         quantityType.setAdapter(quantityTypeArrayAdapter);
         Log.d(LOG_TAG, "onCreate: quantityTypeSpinner populated");
+    }
+
+    /**
+     * This maps Strings with static Quantity objects
+     */
+    private enum Quantities
+    {
+        LENGTH(Length.length, "Length"),
+        AREA(Area.area, "Area"),
+        MASS(Mass.mass, "Mass");
+
+        private Quantity quantityObject;
+        private String friendlyName;
+
+        private Quantities (Quantity quantityObject, String friendlyName)
+        {
+            this.quantityObject = quantityObject;
+            this.friendlyName = friendlyName;
+        }
+
+        public Quantity getQuantityObject ()
+        {
+            return quantityObject;
+        }
+
+        @Override
+        public String toString ()
+        {
+            return friendlyName;
+        }
     }
 
 
