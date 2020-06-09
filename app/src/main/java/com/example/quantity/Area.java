@@ -2,11 +2,11 @@ package com.example.quantity;
 
 import android.widget.Spinner;
 
-public class Length extends Quantity
+public class Area extends Quantity
 {
-    public static Length length = new Length();
+    public static Area area = new Area();
 
-    private Length ()
+    private Area ()
     {
         super(0);
     }
@@ -37,22 +37,21 @@ public class Length extends Quantity
     }
 
     /**
-     * Enumerates the units for Length
+     * Enumerates the units for Area
      */
     public enum Units implements Unit
     {
-        KILOMETRE(1e3, "Kilometre (km)"),
-        DECIMETRE(10, "Decimetre (dm)"),
-        METRE(1, "Metre (m)"),
-        CENTIMETRE(1e-2, "Centimetre (cm)"),
-        MILLIMETRE(1e-3, "Millimetre (mm)"),
-        MICROMETRE(1e-6, "Micrometre (\u00B5m)"),
-        NANOMETRE(1e-9, "Nanometre (nm)"),
-        FEET(0.3048, "Feet (ft)"),
-        MILE(1609.344,"Mile (mi)"),
-        NAUTICALMILE(1852, "Nautical Mile (nmi)"),
-        YARD(0.9144, "Yard (yd)");
-
+        SQKILOMETRE(Math.pow(Length.Units.KILOMETRE.getNormalizationFactor(), 2), "Sq. Kilometre"),
+        SQDECIMETRE(Math.pow(Length.Units.DECIMETRE.getNormalizationFactor(), 2), "Sq. Decimetre"),
+        SQMETRE(Math.pow(Length.Units.METRE.getNormalizationFactor(), 2), "Sq. Metre"),
+        SQCENTIMETRE(Math.pow(Length.Units.CENTIMETRE.getNormalizationFactor(), 2), "Sq. Centimetre"),
+        SQMILLIMETRE(Math.pow(Length.Units.MILLIMETRE.getNormalizationFactor(), 2), "Sq. Millimetre"),
+        SQMICROMETRE(Math.pow(Length.Units.MICROMETRE.getNormalizationFactor(), 2), "Sq. Micrometre"),
+        SQNANOMETRE(Math.pow(Length.Units.NANOMETRE.getNormalizationFactor(), 2), "Nanometre (nm)"),
+        SQFEET(Math.pow(Length.Units.FEET.getNormalizationFactor(), 2), "Sq. Feet"),
+        SQMILE(Math.pow(Length.Units.MILE.getNormalizationFactor(), 2), "Sq. Mile"),
+        SQNAUTICALMILE(Math.pow(Length.Units.NAUTICALMILE.getNormalizationFactor(), 2), "Sq. Nautical Mile"),
+        SQYARD(Math.pow(Length.Units.YARD.getNormalizationFactor(), 2), "Sq. Yard");
 
         /**
          * Normalization factor times magnitude gives the normalized value i.e, terms of SI units

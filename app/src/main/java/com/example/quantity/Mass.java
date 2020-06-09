@@ -6,22 +6,10 @@ public class Mass extends Quantity
 {
     public static Mass mass=new Mass();
 
-//    public Mass (double normalizedMagnitude)
-//    {
-//        super(normalizedMagnitude);
-//    }
-
     private Mass ()
     {
         super(0);
     }
-
-//    public Mass (double magnitude, Unit unit) throws InstantiationError
-//    {
-//        super(magnitude, unit);
-//        if (!(unit instanceof Units))
-//            throw new InstantiationError("Mass object cannot be instantiated for non mass units");
-//    }
 
     @Override
     public double getMagnitude (Unit unit) throws NoSuchMethodError
@@ -47,9 +35,12 @@ public class Mass extends Quantity
 
     public enum Units implements Unit
     {
-        KILOGRAM(1, "Kilogram (kg)"),
         GRAM(1e-3, "Gram (g)"),
-        MILLIGRAM(1e-6, "Milligram(mg)");
+        KILOGRAM(1, "Kilogram (kg)"),
+        MILLIGRAM(1e-6, "Milligram(mg)"),
+        MICROGRAM(1e-9, "Microgram (\u00B5g)"),
+        TONNE(1e3,"Metric Tonne (t)"),
+        POUND(0.45359237, "Pound (lb)");
 
         /**
          * Normalization factor times magnitude gives the normalized value i.e, terms of SI units

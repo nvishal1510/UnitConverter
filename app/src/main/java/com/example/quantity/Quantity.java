@@ -1,6 +1,5 @@
 package com.example.quantity;
 
-import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -13,15 +12,10 @@ public abstract class Quantity
     private double normalizedMagnitude;
 
 
-    public Quantity (double normalizedMagnitude)
+    protected Quantity (double normalizedMagnitude)
     {
         this.normalizedMagnitude = normalizedMagnitude;
     }
-
-//    public Quantity (double magnitude, Unit unit)
-//    {
-//        this(magnitude * unit.getNormalizationFactor());
-//    }
 
     /**
      * normalizedMagnitude represent magnitude of a quantity in SI units
@@ -56,7 +50,8 @@ public abstract class Quantity
 
     public abstract void populateSpinner (Spinner spinner);
 
-    public void populateSpinner( Spinner spinner, Unit[] values){
+    protected void populateSpinner (Spinner spinner, Unit[] values)
+    {
         ArrayAdapter<Unit> unitsArrayAdapter = new ArrayAdapter<>(spinner.getContext(),
                 android.R.layout.simple_spinner_item, values);
         spinner.setAdapter(unitsArrayAdapter);
