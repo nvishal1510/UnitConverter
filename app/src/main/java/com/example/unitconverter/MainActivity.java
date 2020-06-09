@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Formatter used for formatting numbers in ET magnitude
      */
-    NumberFormat numberFormat = new DecimalFormat("##,##,##,##,###.###########");
+    private final NumberFormat numberFormat = new DecimalFormat("##,##,##,##,###.###########");
     private Spinner quantityType;
     private Spinner unit1Type;
     private Spinner unit2Type;
@@ -47,12 +47,11 @@ public class MainActivity extends AppCompatActivity
     /**
      * This object to attached magnitude editTexts to respond to change in text
      */
-    private TextWatcher textWatcher = new TextWatcher()
+    private final TextWatcher textWatcher = new TextWatcher()
     {
         @Override
         public void beforeTextChanged (CharSequence s, int start, int count, int after)
         {
-
         }
 
         @Override
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void afterTextChanged (Editable s)
         {
-
         }
     };
 
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity
      * When an item is selected in any unitType spinner, this changes the Unit 2 Magnitude
      * according to units after the change
      */
-    private OnItemSelectedListener unitTypeListener = new OnItemSelectedListener()
+    private final OnItemSelectedListener unitTypeListener = new OnItemSelectedListener()
     {
         /**
          * This changes the magnitude of the unit 2 regardless of whether unit 1 type is changed
@@ -91,21 +89,21 @@ public class MainActivity extends AppCompatActivity
         {
             Log.d(LOG_TAG,
                     "onItemSelected() called with: parent = [" + parent + "], view = [" + view +
-                            "], position " +
-                            "= [" + position + "], id = [" + id + "]");
-
+                            "], position " + "= [" + position + "], id = [" + id + "]");
             setETMagnitude(unit1Magnitude, (Unit) unit1Type.getSelectedItem(),
                     unit2Magnitude, (Unit) unit2Type.getSelectedItem());
-
         }
 
         @Override
         public void onNothingSelected (AdapterView<?> parent)
         {
-
         }
     };
-    private OnItemSelectedListener quantityTypeListener = new OnItemSelectedListener()
+
+    /**
+     * This object is attached to quantityType spinner as OnItemSelectedListener
+     */
+    private final OnItemSelectedListener quantityTypeListener = new OnItemSelectedListener()
     {
         @Override
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
@@ -119,7 +117,6 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onNothingSelected (AdapterView<?> parent)
         {
-
         }
     };
 
@@ -129,26 +126,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //initialize quantity type spinner
-        quantityType = findViewById(R.id.quantityTypeSpinner);
-        quantityType.setOnItemSelectedListener(quantityTypeListener);
-        populateQuantityTypeSpinner();
-        updateFocusedQuantity();
-
-        //initialize unit type spinners
-        unit1Type = findViewById(R.id.unit1Spinner);
-        unit2Type = findViewById(R.id.unit2Spinner);
-        unit1Type.setOnItemSelectedListener(unitTypeListener);
-        unit2Type.setOnItemSelectedListener(unitTypeListener);
-        focusedQuantity.populateSpinner(unit1Type);
-        focusedQuantity.populateSpinner(unit2Type);
-
-        //initialize magnitudes editText
-        unit1Magnitude = findViewById(R.id.unit1Magnitude);
-        unit2Magnitude = findViewById(R.id.unit2Magnitude);
-        resetEditTexts();
-        unit1Magnitude.addTextChangedListener(textWatcher);
-        unit2Magnitude.addTextChangedListener(textWatcher);
+        initializeQuantitySpinner();
+        initializeUnitSpinners();
+        initializeMagnitudeET();
     }
 
     /**
@@ -164,10 +144,12 @@ public class MainActivity extends AppCompatActivity
      * Extracts magnitude of the unit from getMagnitudeET, calculates the Magnitude of the other
      * unit and sets text to it
      *
-     * @param getMagnitudeET The EditText from which magnitude is extracted, it is used as
-     *                       reference to set magnitude for other unit
-     * @param setMagnitudeET The EditText which is changed according to the magnitude in
-     *                       getMagnitudeET
+     * @param getMagnitudeET     The EditText from which magnitude is extracted, it is used as
+     *                           reference to set magnitude for other unit
+     * @param getMagnitudeETUnit The unit of getMagnitudeET
+     * @param setMagnitudeET     The EditText which is changed according to the magnitude in
+     *                           getMagnitudeET
+     * @param setMagnitudeETUnit The unit of setMagnitudeET
      */
     private void setETMagnitude (EditText getMagnitudeET, Unit getMagnitudeETUnit,
                                  EditText setMagnitudeET, Unit setMagnitudeETUnit)
@@ -188,6 +170,33 @@ public class MainActivity extends AppCompatActivity
         IamEditingText = true;
         setMagnitudeET.setText(numberFormat.format(otherUnitMagnitude));
         IamEditingText = false;
+    }
+
+    private void initializeMagnitudeET ()
+    {
+        unit1Magnitude = findViewById(R.id.unit1Magnitude);
+        unit2Magnitude = findViewById(R.id.unit2Magnitude);
+        resetEditTexts();
+        unit1Magnitude.addTextChangedListener(textWatcher);
+        unit2Magnitude.addTextChangedListener(textWatcher);
+    }
+
+    private void initializeUnitSpinners ()
+    {
+        unit1Type = findViewById(R.id.unit1Spinner);
+        unit2Type = findViewById(R.id.unit2Spinner);
+        unit1Type.setOnItemSelectedListener(unitTypeListener);
+        unit2Type.setOnItemSelectedListener(unitTypeListener);
+        focusedQuantity.populateSpinner(unit1Type);
+        focusedQuantity.populateSpinner(unit2Type);
+    }
+
+    private void initializeQuantitySpinner ()
+    {
+        quantityType = findViewById(R.id.quantityTypeSpinner);
+        quantityType.setOnItemSelectedListener(quantityTypeListener);
+        populateQuantityTypeSpinner();
+        updateFocusedQuantity();
     }
 
     /**
@@ -220,10 +229,10 @@ public class MainActivity extends AppCompatActivity
         AREA(Area.area, "Area"),
         MASS(Mass.mass, "Mass");
 
-        private Quantity quantityObject;
-        private String friendlyName;
+        private final Quantity quantityObject;
+        private final String friendlyName;
 
-        private Quantities (Quantity quantityObject, String friendlyName)
+        Quantities (Quantity quantityObject, String friendlyName)
         {
             this.quantityObject = quantityObject;
             this.friendlyName = friendlyName;

@@ -4,7 +4,7 @@ import android.widget.Spinner;
 
 public class Mass extends Quantity
 {
-    public static Mass mass=new Mass();
+    public static final Mass mass=new Mass();
 
     private Mass ()
     {

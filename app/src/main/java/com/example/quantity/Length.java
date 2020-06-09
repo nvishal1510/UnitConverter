@@ -4,7 +4,7 @@ import android.widget.Spinner;
 
 public class Length extends Quantity
 {
-    public static Length length = new Length();
+    public static final Length length = new Length();
 
     private Length ()
     {

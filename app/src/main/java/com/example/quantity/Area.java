@@ -4,7 +4,7 @@ import android.widget.Spinner;
 
 public class Area extends Quantity
 {
-    public static Area area = new Area();
+    public static final Area area = new Area();
 
     private Area ()
     {
