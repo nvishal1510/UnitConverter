@@ -142,6 +142,11 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
+    /**
+     * Formats the number according to numberFormat
+     * @param s number to be formatted
+     * @return Formatted Number
+     */
     private String getFormattedNumber (String s)
     {
         String formatRemovedStr = s.replace(",", "");
@@ -155,12 +160,15 @@ public class MainActivity extends AppCompatActivity
         {
             e.printStackTrace();
         }
+        //this avoids removal of "." at the end of number
+        if (s.endsWith(".")) return formattedNumber + ".";
         return formattedNumber;
     }
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
     {
+        Log.d(LOG_TAG, "onCreate() called ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
