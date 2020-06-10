@@ -1,10 +1,13 @@
 package com.example.quantity;
 
+import android.util.Log;
 import android.widget.Spinner;
 
 public class Length extends Quantity
 {
     public static final Length length = new Length();
+
+    private static final String LOG_TAG = Length.class.getSimpleName();
 
     private Length ()
     {
@@ -33,6 +36,7 @@ public class Length extends Quantity
     @Override
     public void populateSpinner (Spinner spinner)
     {
+        Log.d(LOG_TAG, "populateSpinner() called with: spinner = [" + spinner + "]");
         super.populateSpinner(spinner, Units.values());
     }
 

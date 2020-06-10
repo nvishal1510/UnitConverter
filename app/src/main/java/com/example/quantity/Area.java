@@ -1,10 +1,13 @@
 package com.example.quantity;
 
+import android.util.Log;
 import android.widget.Spinner;
 
 public class Area extends Quantity
 {
     public static final Area area = new Area();
+
+    private static final String LOG_TAG = Area.class.getSimpleName();
 
     private Area ()
     {
@@ -33,6 +36,7 @@ public class Area extends Quantity
     @Override
     public void populateSpinner (Spinner spinner)
     {
+        Log.d(LOG_TAG, "populateSpinner() called with: spinner = [" + spinner + "]");
         super.populateSpinner(spinner, Units.values());
     }
 

@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
      * Formatter used for formatting numbers in ET magnitude
      */
     private final NumberFormat numberFormat = new DecimalFormat("##,##,##,##,###.###########");
+
     private Spinner quantityType;
     private Spinner unit1Type;
     private Spinner unit2Type;
@@ -61,16 +62,37 @@ public class MainActivity extends AppCompatActivity
             if (IamEditingText) return;
 
             if (s.hashCode() == unit1Magnitude.getText().hashCode())
+            {
+                Log.d(LOG_TAG, "onTextChanged() called with: s = [" + s + "] on EditText = " +
+                        "Unit1Magnitude");
                 setETMagnitude(unit1Magnitude, (Unit) unit1Type.getSelectedItem(),
                         unit2Magnitude, (Unit) unit2Type.getSelectedItem());
+            }
             else
+            {
+                Log.d(LOG_TAG, "onTextChanged() called with: s = [" + s + "] on EditText = " +
+                        "Unit2Magnitude");
                 setETMagnitude(unit2Magnitude, (Unit) unit2Type.getSelectedItem(),
                         unit1Magnitude, (Unit) unit1Type.getSelectedItem());
+            }
         }
 
         @Override
         public void afterTextChanged (Editable s)
         {
+            if (IamEditingText) return;
+            Log.d(LOG_TAG, "afterTextChanged() called with: s = [" + s + "]");
+            if (s.toString().equals("")) return;
+
+            String formattedNumber = getFormattedNumber(s.toString());
+
+            Log.d(LOG_TAG, "afterTextChanged: formattedNumber = [" + formattedNumber + "]");
+            IamEditingText = true;
+            EditText editedET = (s.hashCode() == unit1Magnitude.getText().hashCode()) ?
+                    unit1Magnitude : unit2Magnitude;
+            editedET.setText(formattedNumber);
+            editedET.setSelection(formattedNumber.length());
+            IamEditingText = false;
         }
     };
 
@@ -88,9 +110,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
         {
-            Log.d(LOG_TAG,
-                    "onItemSelected() called with: parent = [" + parent + "], view = [" + view +
-                            "], position " + "= [" + position + "], id = [" + id + "]");
+            Log.d(LOG_TAG, "onItemSelected() called with: parent = [" + parent + "]");
             setETMagnitude(unit1Magnitude, (Unit) unit1Type.getSelectedItem(),
                     unit2Magnitude, (Unit) unit2Type.getSelectedItem());
         }
@@ -109,6 +129,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
         {
+            Log.d(LOG_TAG, "onItemSelected() called with: parent = [" + parent + "]");
             updateFocusedQuantity();
             focusedQuantity.populateSpinner(unit1Type);
             focusedQuantity.populateSpinner(unit2Type);
@@ -120,6 +141,22 @@ public class MainActivity extends AppCompatActivity
         {
         }
     };
+
+    private String getFormattedNumber (String s)
+    {
+        String formatRemovedStr = s.replace(",", "");
+        Log.d(LOG_TAG, "getFormattedNumber() called with: s = [" + s + "]");
+        String formattedNumber = "";
+        try
+        {
+            formattedNumber = numberFormat.format(Double.parseDouble(formatRemovedStr));
+        }
+        catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+        }
+        return formattedNumber;
+    }
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
@@ -137,6 +174,8 @@ public class MainActivity extends AppCompatActivity
      */
     private void updateFocusedQuantity ()
     {
+        Log.d(LOG_TAG,
+                "updateFocusedQuantity() called" + "selectedObject = [" + quantityType.getSelectedItem() + "]");
         Quantities selectedObject = (Quantities) quantityType.getSelectedItem();
         focusedQuantity = selectedObject.getQuantityObject();
     }
@@ -158,12 +197,15 @@ public class MainActivity extends AppCompatActivity
         Log.d(LOG_TAG, "setETMagnitude() called with: getMagnitudeET = [" + getMagnitudeET + "], "
                 + "setMagnitudeET = [" + setMagnitudeET + "]");
         double magnitude = 0;
+        String formatRemovedStr = getMagnitudeET.getText().toString().replace(",", "");
+        Log.d(LOG_TAG, "setETMagnitude: formatRemovedStr = [" + formatRemovedStr + "]");
         try
         {
-            magnitude = Double.parseDouble(getMagnitudeET.getText().toString());
+            magnitude = Double.parseDouble(formatRemovedStr);
         }
-        catch (NumberFormatException ignored)
+        catch (NumberFormatException e)
         {
+            if (!formatRemovedStr.equals("")) e.printStackTrace();
         }
 
         focusedQuantity.setMagnitude(magnitude, getMagnitudeETUnit);
@@ -175,6 +217,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeMagnitudeET ()
     {
+        Log.d(LOG_TAG, "initializeMagnitudeET() called");
         unit1Magnitude = findViewById(R.id.unit1Magnitude);
         unit2Magnitude = findViewById(R.id.unit2Magnitude);
         resetEditTexts();
@@ -184,6 +227,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeUnitSpinners ()
     {
+        Log.d(LOG_TAG, "initializeUnitSpinners() called");
         unit1Type = findViewById(R.id.unit1Spinner);
         unit2Type = findViewById(R.id.unit2Spinner);
         unit1Type.setOnItemSelectedListener(unitTypeListener);
@@ -194,6 +238,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeQuantitySpinner ()
     {
+        Log.d(LOG_TAG, "initializeQuantitySpinner() called");
         quantityType = findViewById(R.id.quantityTypeSpinner);
         quantityType.setOnItemSelectedListener(quantityTypeListener);
         populateQuantityTypeSpinner();
@@ -205,6 +250,7 @@ public class MainActivity extends AppCompatActivity
      */
     private void resetEditTexts ()
     {
+        Log.d(LOG_TAG, "resetEditTexts() called");
         IamEditingText = true;
         unit1Magnitude.setText(numberFormat.format(0));
         unit2Magnitude.setText(numberFormat.format(0));
@@ -242,6 +288,7 @@ public class MainActivity extends AppCompatActivity
 
         public Quantity getQuantityObject ()
         {
+            Log.d(LOG_TAG, "Quantities.getQuantityObject() called");
             return quantityObject;
         }
 

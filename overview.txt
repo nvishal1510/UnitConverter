@@ -24,6 +24,6 @@ dictionary to  map visible quantity strings to classes
 
 
 Improvements to be done
-    - Output in decimal form only if necessary
-    - When user clicks on magnitudeET, text should get selected
+    - Output in decimal form only if necessary (Done)
+    - When user clicks on magnitudeET, text should get selected (Done)
     - Improve look and feel of the app

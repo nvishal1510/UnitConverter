@@ -1,10 +1,12 @@
 package com.example.quantity;
 
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 public abstract class Quantity
 {
+    private static final String LOG_TAG = Quantity.class.getSimpleName();
 
     /**
      * normalizedMagnitude represent magnitude of a quantity in SI units
@@ -24,11 +26,14 @@ public abstract class Quantity
      */
     public double getNormalizedMagnitude ()
     {
+        Log.d(LOG_TAG, "getNormalizedMagnitude() called");
         return normalizedMagnitude;
     }
 
     public void setNormalizedMagnitude (double normalizedMagnitude)
     {
+        Log.d(LOG_TAG,
+                "setNormalizedMagnitude() called with: normalizedMagnitude = [" + normalizedMagnitude + "]");
         this.normalizedMagnitude = normalizedMagnitude;
     }
 
@@ -37,6 +42,7 @@ public abstract class Quantity
      */
     public double getMagnitude (Unit unit)
     {
+        Log.d(LOG_TAG, "getMagnitude() called with: unit = [" + unit + "]");
         return getNormalizedMagnitude() / unit.getNormalizationFactor();
     }
 
@@ -45,6 +51,8 @@ public abstract class Quantity
      */
     public void setMagnitude (double magnitude, Unit unit)
     {
+        Log.d(LOG_TAG,
+                "setMagnitude() called with: magnitude = [" + magnitude + "], unit = [" + unit + "]");
         this.normalizedMagnitude = magnitude * unit.getNormalizationFactor();
     }
 

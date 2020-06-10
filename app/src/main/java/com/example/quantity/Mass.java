@@ -1,10 +1,13 @@
 package com.example.quantity;
 
+import android.util.Log;
 import android.widget.Spinner;
 
 public class Mass extends Quantity
 {
     public static final Mass mass=new Mass();
+
+    private static final String LOG_TAG = Mass.class.getSimpleName();
 
     private Mass ()
     {
@@ -29,6 +32,7 @@ public class Mass extends Quantity
     @Override
     public void populateSpinner (Spinner spinner)
     {
+        Log.d(LOG_TAG, "populateSpinner() called with: spinner = [" + spinner + "]");
         super.populateSpinner(spinner, Units.values());
     }
 
