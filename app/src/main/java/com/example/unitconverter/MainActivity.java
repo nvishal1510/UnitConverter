@@ -18,6 +18,7 @@ import com.example.quantity.Length;
 import com.example.quantity.Mass;
 import com.example.quantity.Quantity;
 import com.example.quantity.Unit;
+import com.example.quantity.Volume;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -227,7 +228,8 @@ public class MainActivity extends AppCompatActivity
     {
         LENGTH(Length.length, "Length"),
         AREA(Area.area, "Area"),
-        MASS(Mass.mass, "Mass");
+        MASS(Mass.mass, "Mass"),
+        VOLUME(Volume.volume, "Volume");
 
         private final Quantity quantityObject;
         private final String friendlyName;

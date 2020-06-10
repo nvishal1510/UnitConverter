@@ -50,7 +50,7 @@ public class Length extends Quantity
         NANOMETRE(1e-9, "Nanometre (nm)"),
         FEET(0.3048, "Feet (ft)"),
         MILE(1609.344,"Mile (mi)"),
-        NAUTICALMILE(1852, "Nautical Mile (nmi)"),
+        NAUTICAL_MILE(1852, "Nautical Mile (nmi)"),
         YARD(0.9144, "Yard (yd)");
 
 

@@ -2,11 +2,11 @@ package com.example.quantity;
 
 import android.widget.Spinner;
 
-public class Area extends Quantity
+public class Volume extends Quantity
 {
-    public static final Area area = new Area();
+    public static final Volume volume = new Volume();
 
-    private Area ()
+    private Volume ()
     {
         super(0);
     }
@@ -37,18 +37,19 @@ public class Area extends Quantity
     }
 
     /**
-     * Enumerates the units for Area
+     * Enumerates the units for Volume
      */
     public enum Units implements Unit
     {
-        SQ_KILOMETRE(Math.pow(Length.Units.KILOMETRE.getNormalizationFactor(), 2), "Sq. Kilometre"),
-        SQ_DECIMETRE(Math.pow(Length.Units.DECIMETRE.getNormalizationFactor(), 2), "Sq. Decimetre"),
-        SQ_METRE(Math.pow(Length.Units.METRE.getNormalizationFactor(), 2), "Sq. Metre"),
-        SQ_CENTIMETRE(Math.pow(Length.Units.CENTIMETRE.getNormalizationFactor(), 2), "Sq. Centimetre"),
-        SQ_MILLIMETRE(Math.pow(Length.Units.MILLIMETRE.getNormalizationFactor(), 2), "Sq. Millimetre"),
-        SQ_FEET(Math.pow(Length.Units.FEET.getNormalizationFactor(), 2), "Sq. Feet"),
-        SQ_MILE(Math.pow(Length.Units.MILE.getNormalizationFactor(), 2), "Sq. Mile"),
-        SQ_YARD(Math.pow(Length.Units.YARD.getNormalizationFactor(), 2), "Sq. Yard");
+        CUBIC_KILOMETRE(Math.pow(Length.Units.KILOMETRE.getNormalizationFactor(), 3), "Cu. Kilometre"),
+        CUBIC_DECIMETRE(Math.pow(Length.Units.DECIMETRE.getNormalizationFactor(), 3), "Cu. Decimetre"),
+        CUBIC_METRE(Math.pow(Length.Units.METRE.getNormalizationFactor(), 3), "Cu. Metre"),
+        CUBIC_CENTIMETRE(Math.pow(Length.Units.CENTIMETRE.getNormalizationFactor(), 3), "Cu. Centimetre"),
+        CUBIC_MILLIMETRE(Math.pow(Length.Units.MILLIMETRE.getNormalizationFactor(), 3), "Cu. Millimetre"),
+        CUBIC_MICROMETRE(Math.pow(Length.Units.MICROMETRE.getNormalizationFactor(), 3), "Cu. Micrometre"),
+        CUBIC_NANOMETRE(Math.pow(Length.Units.NANOMETRE.getNormalizationFactor(), 3), "Nanometre (nm)"),
+        CUBIC_FEET(Math.pow(Length.Units.FEET.getNormalizationFactor(), 3), "Cu. Feet"),
+        CUBIC_MILE(Math.pow(Length.Units.MILE.getNormalizationFactor(), 3), "Cu. Mile");
 
         /**
          * Normalization factor times magnitude gives the normalized value i.e, terms of SI units
