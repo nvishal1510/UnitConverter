@@ -253,6 +253,16 @@ public class MainActivity extends AppCompatActivity
         updateFocusedQuantity();
     }
 
+    private void populateQuantityTypeSpinner ()
+    {
+        Log.d(LOG_TAG, "populateQuantityTypeSpinner() called");
+
+        ArrayAdapter<Quantities> quantityTypeArrayAdapter = new ArrayAdapter<>(this,
+                R.layout.custom_spinner_item, Quantities.values());
+        quantityType.setAdapter(quantityTypeArrayAdapter);
+        Log.d(LOG_TAG, "onCreate: quantityTypeSpinner populated");
+    }
+
     /**
      * Sets the values of the two editText to 0
      */
@@ -263,16 +273,6 @@ public class MainActivity extends AppCompatActivity
         unit1Magnitude.setText(numberFormat.format(0));
         unit2Magnitude.setText(numberFormat.format(0));
         IamEditingText = false;
-    }
-
-    private void populateQuantityTypeSpinner ()
-    {
-        Log.d(LOG_TAG, "populateQuantityTypeSpinner() called");
-
-        ArrayAdapter<Quantities> quantityTypeArrayAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, Quantities.values());
-        quantityType.setAdapter(quantityTypeArrayAdapter);
-        Log.d(LOG_TAG, "onCreate: quantityTypeSpinner populated");
     }
 
     /**

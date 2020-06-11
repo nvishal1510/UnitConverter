@@ -4,6 +4,8 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.unitconverter.R;
+
 public abstract class Quantity
 {
     private static final String LOG_TAG = Quantity.class.getSimpleName();
@@ -51,8 +53,7 @@ public abstract class Quantity
      */
     public void setMagnitude (double magnitude, Unit unit)
     {
-        Log.d(LOG_TAG,
-                "setMagnitude() called with: magnitude = [" + magnitude + "], unit = [" + unit + "]");
+        Log.d(LOG_TAG, "setMagnitude() called with: magnitude = [" + magnitude + "], unit = [" + unit + "]");
         this.normalizedMagnitude = magnitude * unit.getNormalizationFactor();
     }
 
@@ -61,7 +62,7 @@ public abstract class Quantity
     protected void populateSpinner (Spinner spinner, Unit[] values)
     {
         ArrayAdapter<Unit> unitsArrayAdapter = new ArrayAdapter<>(spinner.getContext(),
-                android.R.layout.simple_spinner_item, values);
+                R.layout.custom_spinner_item, values);
         spinner.setAdapter(unitsArrayAdapter);
     }
 
