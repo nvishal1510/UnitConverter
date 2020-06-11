@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="linear_layout_horizontal_margin">24dp</dimen>
+    <dimen name="outer_layout_horizontal_margin">5dp</dimen>
+    <dimen name="ET_top_margin">5dp</dimen>
+</resources>

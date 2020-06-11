@@ -3,24 +3,32 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ebf5f4"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         tools:context=".MainActivity">
 
     <LinearLayout
             android:id="@+id/quantityType"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="24dp"
-            android:orientation="horizontal">
+            android:layout_marginHorizontal="@dimen/linear_layout_horizontal_margin"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="@dimen/outer_layout_horizontal_margin"
+            android:background="@drawable/shadow"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp">
 
         <TextView
                 android:id="@+id/quantityTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="@string/quantity_type_label" />
+                android:text="@string/quantity_type_label"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
 
         <Spinner
                 android:id="@+id/quantityTypeSpinner"
@@ -31,71 +39,95 @@
     </LinearLayout>
 
     <LinearLayout
-            android:id="@+id/unit1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="10dp">
-
-        <TextView
-                android:id="@+id/unit1Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/unit_1_label" />
-
-        <Spinner
-                android:id="@+id/unit1Spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp" />
-    </LinearLayout>
-
-    <EditText
-            android:id="@+id/unit1Magnitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="24dp"
-            android:hint="@string/magnitude_hint"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:padding="16dp"
-            android:selectAllOnFocus="true" />
+            android:layout_marginHorizontal="@dimen/linear_layout_horizontal_margin"
+            android:layout_marginVertical="@dimen/outer_layout_horizontal_margin"
+            android:background="@drawable/shadow"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:id="@+id/unit1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="7dp">
+
+            <TextView
+                    android:id="@+id/unit1Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/unit_1_label"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+
+            <Spinner
+                    android:id="@+id/unit1Spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp" />
+        </LinearLayout>
+
+        <EditText
+                android:id="@+id/unit1Magnitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="@dimen/ET_top_margin"
+                android:layout_marginBottom="24dp"
+                android:hint="@string/magnitude_hint"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:padding="16dp"
+                android:selectAllOnFocus="true" />
+    </LinearLayout>
 
     <LinearLayout
-            android:id="@+id/unit2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="10dp">
-
-        <TextView
-                android:id="@+id/unit2Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/unit_2_label" />
-
-        <Spinner
-                android:id="@+id/unit2Spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp" />
-    </LinearLayout>
-
-    <EditText
-            android:id="@+id/unit2Magnitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="24dp"
-            android:hint="@string/magnitude_hint"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:padding="16dp"
-            android:selectAllOnFocus="true" />
+            android:layout_marginHorizontal="@dimen/linear_layout_horizontal_margin"
+            android:layout_marginVertical="@dimen/outer_layout_horizontal_margin"
+            android:background="@drawable/shadow"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:id="@+id/unit2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="7dp">
+
+            <TextView
+                    android:id="@+id/unit2Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/unit_2_label"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+
+            <Spinner
+                    android:id="@+id/unit2Spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp" />
+        </LinearLayout>
+
+        <EditText
+                android:id="@+id/unit2Magnitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="@dimen/ET_top_margin"
+                android:layout_marginBottom="24dp"
+                android:hint="@string/magnitude_hint"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:padding="16dp"
+                android:selectAllOnFocus="true" />
+    </LinearLayout>
 
 </LinearLayout>
